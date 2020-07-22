@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "firstName": "Gunther",
+        "surname": "Kjelberg",
+        "username": "GewBiePie",
+        "email": "guntherpie@gmail.com",
+        "password": "10YearOldArmy"
+    },
+    {
+        "id": 2,
+        "firstName": "Gunther2",
+        "surname": "Kjelberg2",
+        "username": "test",
+        "email": "test@gmail.com",
+        "password": "test"
+    }
+]
