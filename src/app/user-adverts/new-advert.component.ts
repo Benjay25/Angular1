@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs';
 export class NewAdvertComponent implements OnInit {
   newAdForm: FormGroup;
   newAd: Advert;
-  createSub: Subscription;
   sub: Subscription;
   errorMessage: any;
   advert: Advert;
@@ -28,10 +27,9 @@ export class NewAdvertComponent implements OnInit {
       price: ['', [Validators.required]]
     });
 
-    this.sub = this.route.paramMap.subscribe(
+    this.sub = this.sub = this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
-        console.log(id);
         if (id != 0) {
           this.getAdvert(id);
         }
@@ -41,8 +39,7 @@ export class NewAdvertComponent implements OnInit {
 
   getAdvert(id: number): void {
     this.advertService.getAdvert(id).subscribe({
-        next: (advert: Advert) => {this.displayadvert(advert);
-        console.log(this.advert);},
+        next: (advert: Advert) => this.displayadvert(advert),
         error: err => this.errorMessage = err
       });
   }
@@ -94,5 +91,15 @@ export class NewAdvertComponent implements OnInit {
       this.router.navigate(["/userAd"]);
     }
   });
+  }
+
+  back(): void {
+    if (confirm("Are you sure you want to go back and delete all entered information?")) {
+        this.router.navigate(["/userAd"]);
+      }
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe;
   }
 }
