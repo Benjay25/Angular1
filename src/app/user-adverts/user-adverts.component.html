@@ -1,0 +1,53 @@
+<h1>User Adverts</h1>
+
+<div class="container">
+    <button class="btn btn-secondary btn-md" style="width: 100px ;" routerLinkActive='active' [routerLink]="['/newAd']">Create Ad</button>
+    <span style="padding: 10px;"></span>
+    <button class="btn btn-secondary btn-md" style="width: 100px ;" routerLinkActive='active' [routerLink]="['/welcome']">Home</button>
+</div>
+<div *ngIf="!arrAdverts.length" style="font-size: 25; color: gray; text-align: center;" >
+    You have no posts
+</div>
+<div id="advert-list-container" *ngIf="arrAdverts && arrAdverts.length">
+    <div class="container p-3 my-3 bg-dark text-white"  *ngFor='let advert of arrAdverts'> 
+        <div class="row">
+            <div class="col-sm-10">
+                <h1>{{ advert.title}}</h1>
+                
+                <hr>
+            </div>
+            <div class="col-sm-2">
+                    <button class="btn btn-success" routerLinkActive='active' 
+                        [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/newAd', advert.id, 'edit']">Edit
+                    </button> 
+                    <span style="padding: 5px;"> </span>
+                    <button class="btn btn-danger" (click)="deleteAdvert(advert.id)">Delete
+                    </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top: -20px;">
+            <div class="col-sm-8">
+                Description:
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                {{ advert.description }}
+            </div>
+            <div class="col-sm-2" style="font-size: 25px;">
+                R{{ advert.price }}
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: -12px; margin-top: 15px; font-size: 12; color: gray;">
+            <div class="col-sm-8 dark">
+                Posted by: {{ advert.username }}
+            </div>
+            <div class="col-sm-4">
+                Date listed: {{ advert.date.toString() }}
+            </div>
+        </div>
+        
+        
+    </div>
+</div>

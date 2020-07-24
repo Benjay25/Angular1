@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { User } from './user';
 import { UserService } from './user.service';
 import { ValidationMessages } from './validation.messages';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -15,8 +16,9 @@ import { ValidationMessages } from './validation.messages';
 export class RegistrationComponent implements OnInit {
   regForm: FormGroup;
   regUser: User;
-  userList: User[];
-  errorMessage: any;
+  userList: User[] = [];
+  subs: Subscription[] = [];
+  errorMessage: string = '';
   validationMessages: ValidationMessages = new ValidationMessages;
   message: { [key: string]: string} = {};
 
@@ -30,28 +32,35 @@ export class RegistrationComponent implements OnInit {
       "email": this.regForm.get('email').value.trim(),
       "password": this.regForm.get('password').value.trim()
     }
-    if (this.emailUnique()) {
-      if (this.usernameUnique()) {
-        if (this.passwordConfirmed()) {
-            this.userService.createUser(this.regUser).subscribe({ //create new user using service
-              next: () => {
-              console.log("account created successfully.");
-              console.log(this.regUser);
-              this.router.navigate(["/login"]);
-            }
-          });
-        } else {
-          this.errorMessage = "Passwords do not match";
-        }
-      } else {
-        this.errorMessage = "This username is already taken";
-      }
-    } else {
+    if (!this.emailUnique()) {
       this.errorMessage = "This email is already in use";
+      return;
     }
-  }
+    if (!this.usernameUnique()) {
+      this.errorMessage = "This username is already taken";
+      return;
+    }
+    if (!this.passwordConfirmed()) {
+      this.userService.createUser(this.regUser).subscribe({ //create new user using service
+        next: () => {
+        console.log("account created successfully.");
+        console.log(this.regUser);
+        this.router.navigate(["/login"]);
+        }
+      });
+    } else {
+    this.errorMessage = "Passwords do not match";
+  }      
+}
 
   ngOnInit(): void {
+    let controls: string[] = ["firstnames", "surname", "username", "email","password", "cpassword"];
+    this.subs = [];
+    this.userService.getUsers().subscribe({
+      next: users => {
+        this.userList = users;
+      },error: err => console.log(err)
+    }); 
     this.regForm = this.fb.group({
       firstnames: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       surname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
@@ -61,20 +70,13 @@ export class RegistrationComponent implements OnInit {
       cpassword: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(25)]]
     });
 
-    let controls: string[] = ["firstnames", "surname", "username", "email","password", "cpassword"];
     for (let i = 0; i < controls.length; i++) {
       const element = controls[i];
       const control = this.regForm.get(element);
-      control.valueChanges.subscribe(
+      this.subs[i] = control.valueChanges.subscribe(
         value => this.setMessage(control, element)
       )
     }
-    
-    this.userService.getUsers().subscribe({
-      next: users => {
-        this.userList = users;
-      },error: err => this.errorMessage = err
-    });
   }
 
   setMessage(c: AbstractControl, controlName: string): void {
@@ -111,5 +113,11 @@ export class RegistrationComponent implements OnInit {
       }
     }
     return true; 
+  }
+
+  ngOnDestroy() {
+    for (let i = 0; i < this.subs.length; i++) {
+      this.subs[i].unsubscribe();
+    }
   }
 }

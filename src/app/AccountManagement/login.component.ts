@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LogInComponent implements OnInit {
-  userList: User[];
+  userList: User[] = [];
   errMsg: string = "";
   signInForm: FormGroup;
   errorMessage: any;
@@ -21,19 +21,20 @@ export class LogInComponent implements OnInit {
   validate() {
     let email: string = this.signInForm.get('email').value.trim();
     let pw: string = this.signInForm.get('password').value.trim();
-    localStorage.setItem("email", "none");
+    localStorage.setItem("email", "");
 
     for (let i = 0; i < this.userList.length; i++) {
       const user = this.userList[i];
       if (email === user.email) {
         if (pw === user.password) {
           localStorage.setItem("email", email);
-          this.router.navigate(['/welcome']);
+          localStorage.setItem("username", user.username);
+          this.router.navigate(['/userAd']);
           break;
         }
        }
     }
-    if (localStorage.getItem("email") === "none") {
+    if (localStorage.getItem("email")) {
       this.errMsg = "Email or Password is incorrect"
     }
   }
@@ -49,5 +50,4 @@ export class LogInComponent implements OnInit {
       password: ''
     });
   }
-
 }

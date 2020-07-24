@@ -1,59 +1,17 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { User } from './user';
 import { Injectable } from '@angular/core';
-import { Advert } from '../user-adverts/advert';
+import { Advert } from './advert';
 
 @Injectable ({
     providedIn: 'root'
 })
 
-export class Data implements InMemoryDbService {
+export class asdf implements InMemoryDbService {
     constructor() {}
     date:Date = new Date();
     createDb() {
-        let usersArr: User[] = [
-            {
-                "id": 1,
-                "firstnames": "Gunther",
-                "surname": "Kjelberg",
-                "username": "GuntiePie",
-                "email": "guntherpie@gmail.com",
-                "password": "10YearOldArmy"
-            },
-            {
-                "id": 2,
-                "firstnames": "Jake",
-                "surname": "Johnson",
-                "username": "pepperwood420",
-                "email": "nick.miller@gmail.com",
-                "password": "username"
-            },
-            {
-                "id": 3,
-                "firstnames": "Winston",
-                "surname": "Bishop",
-                "username": "theBish",
-                "email": "winniebball@latvia.com",
-                "password": "courtRoomBrown"
-            },
-            {
-                "id": 4,
-                "firstnames": "Captain Jack",
-                "surname": "Sparrow",
-                "username": "PearlsCaptain",
-                "email": "sparrow@sevenseas.com",
-                "password": "RumsAlwaysGone"
-            },
-            {
-                "id": 5,
-                "firstnames": "Susan",
-                "surname": "Jennings",
-                "username": "cakeLover25",
-                "email": "jennings.susie@gmail.com",
-                "password": "flowerPower99"
-            }
-        ];
-        let arrAdverts: Advert[] = [
+        let arrAdverts: Advert[] = [];
+        arrAdverts = [
             {
                 "id": 1,
                 "title": "GuntiePie Merch 50% off",
@@ -95,6 +53,6 @@ export class Data implements InMemoryDbService {
                 "username": "cakeLover25"
             }
         ];
-        return {usersArr, arrAdverts};
+        return {arrAdverts};
     }
 }
