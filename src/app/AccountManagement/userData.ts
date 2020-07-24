@@ -9,7 +9,8 @@ import { Advert } from '../user-adverts/advert';
 
 export class Data implements InMemoryDbService {
     constructor() {}
-    date:Date = new Date();
+    newdate:Date = new Date();
+    date: string = this.newdate.toDateString();
     createDb() {
         let usersArr: User[] = [
             {
@@ -65,7 +66,7 @@ export class Data implements InMemoryDbService {
             {
                 "id": 2,
                 "title": "The Pepperwood Chronicles",
-                "description": "Story about Julius Pepperwood who's from Chicago. He's a detective. Author: Nicholas Miller. 'This Author truly cannot spell rythm' - New York Times ",
+                "description": "Story about Julius Pepperwood who's from Chicago. He's a detective on a mission to uncover the truth. Author: Nicholas Miller. 'This Author truly cannot spell rhythm' - New York Times ",
                 "price": 250.00,
                 "date": this.date,
                 "username": "pepperwood420",
@@ -73,7 +74,7 @@ export class Data implements InMemoryDbService {
             {
                 "id": 3,
                 "title": "Bell playing lessons",
-                "description": "Winnie gonna help you unlease the magice of the three-in-hand bell style!",
+                "description": "Winnie gonna help you unleash the magic of the three-in-hand bell style!",
                 "price": 150.00,
                 "date": this.date,
                 "username": "theBish",
@@ -84,7 +85,7 @@ export class Data implements InMemoryDbService {
                 "description": "Me crew needs some coin for refreshments and I happen to have a rather sought after collection of bottles in me possession.",
                 "price": 50000.00,
                 "date": this.date,
-                "username": "PearlsCaptain",
+                "username": "CaptainOfThePearl",
             },
             {
                 "id": 5,

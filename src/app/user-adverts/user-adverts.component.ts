@@ -52,10 +52,7 @@ export class UserAdvertsComponent implements OnInit {
           error: err => this.errorMessage = err
         });
     }
-}
+  }  
 
-  ngOnDestroy(): void {
-    
-  }
 }
   

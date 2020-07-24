@@ -17,7 +17,7 @@ export class NewAdvertComponent implements OnInit {
   sub: Subscription;
   errorMessage: any;
   advert: Advert;
-  pageTitle: string;
+  pageTitle: string = "Create new Advert";
   constructor(private fb: FormBuilder, private advertService: AdvertService, private router: Router, private route: ActivatedRoute) {  }
 
   ngOnInit(): void {
@@ -33,26 +33,23 @@ export class NewAdvertComponent implements OnInit {
         if (id != 0) {
           this.getAdvert(id);
         }
-      }
-    );
+      });
   }
 
-  getAdvert(id: number): void {
+  getAdvert(id: number): void { //retrieve advert
+    this.pageTitle = '';
     this.advertService.getAdvert(id).subscribe({
         next: (advert: Advert) => this.displayadvert(advert),
         error: err => this.errorMessage = err
       });
   }
 
-  displayadvert(advert:Advert): void {
+  displayadvert(advert:Advert): void { //fills the form with the selected ad's data
     if (this.newAdForm) {
       this.newAdForm.reset();
     }
     this.advert = advert;
-
-    if (this.advert.id === 0) {
-      this.pageTitle = 'Add Advert';
-    } else {
+    if (this.advert.id !== 0) {
       this.pageTitle = `Edit Advert: ${this.advert.title}`;
     }
     this.newAdForm.patchValue({
@@ -83,7 +80,7 @@ export class NewAdvertComponent implements OnInit {
         "title": this.newAdForm.get('title').value.trim(),
         "description": this.newAdForm.get('description').value.trim(),
         "price": this.newAdForm.get('price').value.trim(),
-        "date": new Date(),
+        "date": new Date().toDateString(),
         "username": localStorage.getItem("username")
     }
     this.sub = this.advertService.createAdvert(this.newAd).subscribe({ //create new advert using service

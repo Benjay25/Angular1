@@ -1,1 +1,51 @@
-<h1 style="text-align: center; font-size: 50px;">Welcome</h1>
+<h1 style="text-align: center; font-size: 50px; color: honeydew">Welcome</h1>
+
+
+<form  [formGroup]="advertsForm" *ngIf="this.advertsForm">
+    <div class="container form-group row mb-2">
+        <span style="padding: 2px;"></span>
+        <input type="text" placeholder="Search for an advert" formControlName="search" class="form-control col-sm-4">
+        <span style="padding: 1px;"></span>
+        <button class="btn btn-outline-secondary" (click)="clear()">X</button>
+    </div>
+<div *ngIf="!arrAdverts.length" style="font-size: 25; color: gray; text-align: center;" >
+    There are no adverts
+</div>
+</form>
+<div id="advert-list-container" *ngIf="arrAdverts && arrAdverts.length">
+    <div class="container p-3 my-3 bg-dark text-white"  *ngFor='let advert of arrAdverts'> 
+        <div class="row">
+            <div class="col-sm-11">
+                <h1>{{ advert.title}}</h1>
+                
+                <hr>
+            </div>
+            <div class="col-sm-1">
+                    <button class="btn btn-success" style="width: 80px; margin-left: -25px;" routerLinkActive='active' 
+                        [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/checkout', advert.id]">Buy
+                    </button>
+            </div>
+        </div>
+        <div class="row" style="margin-top: -20px;">
+            <div class="col-sm-8">
+                Description:
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                {{ advert.description }}
+            </div>
+            <div class="col-sm-2" style="font-size: 25px;">
+                R{{ advert.price }}
+            </div>
+        </div>
+        <div class="row" style="margin-bottom: -12px; margin-top: 15px; font-size: 12; color: gray;">
+            <div class="col-sm-8 dark">
+                Posted by: {{ advert.username }}
+            </div>
+            <div class="col-sm-4">
+                Date listed: {{ advert.date }}
+            </div>
+        </div>
+    </div>
+</div>

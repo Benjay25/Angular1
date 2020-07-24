@@ -3,6 +3,6 @@ export interface Advert {
     title: string,
     description: string,
     price: number,
-    date: Date,
+    date: string,
     username: string
 }

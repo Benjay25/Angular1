@@ -35,7 +35,7 @@ export class LogInComponent implements OnInit {
        }
     }
     if (localStorage.getItem("email")) {
-      this.errMsg = "Email or Password is incorrect"
+      this.errMsg = "Email or Password is incorrect";
     }
   }
 

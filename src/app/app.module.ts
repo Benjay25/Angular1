@@ -10,10 +10,11 @@ import { UserAdvertsGuard } from "./user-adverts/user-adverts.guard";
 import { RouterModule } from '@angular/router';
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { LogInComponent } from './AccountManagement/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserAdvertsComponent } from './user-adverts/user-adverts.component';
 import { NewAdvertComponent } from './user-adverts/new-advert.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { NewAdvertComponent } from './user-adverts/new-advert.component';
     WelcomeComponent,
     LogInComponent,
     UserAdvertsComponent,
-    NewAdvertComponent
+    NewAdvertComponent,
+    CheckoutComponent
   ],
   imports: [
     BrowserModule,
@@ -32,12 +34,16 @@ import { NewAdvertComponent } from './user-adverts/new-advert.component';
       { path: 'register', component: RegistrationComponent },
       { path: 'login', component: LogInComponent },
       { path: 'userAd', canActivate: [UserAdvertsGuard], component: UserAdvertsComponent },
-      { path: 'newAd', component: NewAdvertComponent },      
-      { path: 'newAd/:id/edit', component: NewAdvertComponent },      
+      { path: 'newAd', canActivate: [UserAdvertsGuard], component: NewAdvertComponent },      
+      { path: 'newAd/:id/edit', canActivate: [UserAdvertsGuard], component: NewAdvertComponent },      
+      { path: 'checkout/:id', canActivate: [UserAdvertsGuard], component: CheckoutComponent },      
+      // { path: 'checkout', component: CheckoutComponent },      
+      // { path: 'checkout/:id/', redirectTo: 'checkout', pathMatch: 'full' },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
       { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
     ]),
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [],

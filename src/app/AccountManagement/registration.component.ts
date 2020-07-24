@@ -89,7 +89,8 @@ export class RegistrationComponent implements OnInit {
 
   //functions for validating information
   passwordConfirmed(): boolean {
-    if (this.regUser.password === this.regForm.get('cpassword').value) {
+    console.log(this.regUser.password +" + "+ this.regForm.get('cpassword').value)
+    if (this.regUser.password !== this.regForm.get('cpassword').value) {
       return true;
     } else 
     return false;

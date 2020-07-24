@@ -1,0 +1,25 @@
+<div class="container" style="font-size: 20px;">
+    <h1 style="text-align: center; font-size: 50px; color: honeydew">Checkout Page</h1>
+    <form  *ngIf="adInfo">
+        <div class='row justify-content-center'>
+            <label class="form-label col-sm-2 right" style="color: honeydew; font-size: 22px;">Title: </label>
+            <div class="col-sm-5">{{ adInfo.title }}</div>
+        </div>
+        <div class='row justify-content-center'>
+            <label  class="form-label col-sm-2 right" style="color: honeydew; font-size: 22px;">Price:</label>
+            <div class="col-sm-5"><span>R</span>{{ adInfo.price }}</div>
+        </div>
+        <div class='row justify-content-center'>  
+            <label class="form-label col-sm-2 right" style="color: honeydew; font-size: 22px;">Description: </label>
+            <div class="col-sm-5">{{ adInfo.description }}</div>
+        </div>
+        <div class='row justify-content-center'>
+            <label class="form-label col-sm-2 right" style="color: honeydew; font-size: 22px;">Posted By: </label>
+            <div class="col-sm-5">{{ adInfo.username }}</div>
+        </div>
+        <div class='row justify-content-center'>
+            <label class="form-label col-sm-2 right" style="color: honeydew; font-size: 22px;">Posted date:</label>
+            <div class="col-sm-5">{{ adInfo.date }}</div>
+        </div>
+    </form>
+</div>
